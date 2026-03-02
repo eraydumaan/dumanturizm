@@ -8,7 +8,29 @@ links.forEach((link) => {
     if (target) {
       target.scrollIntoView({ behavior: "smooth" });
     }
+    // Mobilde menüyü kapat
+    document.querySelector(".nav").classList.remove("active");
+    document.querySelector(".hamburger").classList.remove("active");
   });
+});
+
+// Hamburger Menü
+const hamburger = document.querySelector(".hamburger");
+const nav = document.querySelector(".nav");
+
+if (hamburger) {
+  hamburger.addEventListener("click", () => {
+    hamburger.classList.toggle("active");
+    nav.classList.toggle("active");
+  });
+}
+
+// Menü dışına tıklayınca kapat
+document.addEventListener("click", (e) => {
+  if (!e.target.closest(".nav") && !e.target.closest(".hamburger")) {
+    if (nav) nav.classList.remove("active");
+    if (hamburger) hamburger.classList.remove("active");
+  }
 });
 
 const form = document.querySelector(".contact-form");
@@ -50,3 +72,83 @@ const revealObserver = new IntersectionObserver(
 );
 
 revealItems.forEach((item) => revealObserver.observe(item));
+
+// Fiyat Hesaplama
+const calcBtn = document.getElementById("calc-price");
+const resultPrice = document.getElementById("result-price");
+
+// Mesafe matrisi (basit tahmini km değerleri)
+const distances = {
+  bahcesehir: { maslak: 35, levent: 32, mecidiyekoy: 30, sisli: 28, taksim: 30, kadikoy: 55, atasehir: 50, umraniye: 45, gebze: 80, dudullu: 40 },
+  esenyurt: { maslak: 40, levent: 38, mecidiyekoy: 35, sisli: 33, taksim: 35, kadikoy: 60, atasehir: 55, umraniye: 50, gebze: 85, dudullu: 45 },
+  avcilar: { maslak: 30, levent: 28, mecidiyekoy: 25, sisli: 23, taksim: 25, kadikoy: 45, atasehir: 40, umraniye: 35, gebze: 70, dudullu: 35 },
+  beylikduzu: { maslak: 45, levent: 42, mecidiyekoy: 40, sisli: 38, taksim: 40, kadikoy: 65, atasehir: 60, umraniye: 55, gebze: 90, dudullu: 50 },
+  kadikoy: { maslak: 25, levent: 22, mecidiyekoy: 20, sisli: 18, taksim: 15, kadikoy: 5, atasehir: 12, umraniye: 18, gebze: 45, dudullu: 20 },
+  atasehir: { maslak: 20, levent: 18, mecidiyekoy: 18, sisli: 20, taksim: 22, kadikoy: 12, atasehir: 5, umraniye: 10, gebze: 40, dudullu: 8 },
+  umraniye: { maslak: 18, levent: 16, mecidiyekoy: 20, sisli: 22, taksim: 25, kadikoy: 18, atasehir: 10, umraniye: 5, gebze: 35, dudullu: 5 },
+  pendik: { maslak: 45, levent: 42, mecidiyekoy: 45, sisli: 47, taksim: 50, kadikoy: 25, atasehir: 20, umraniye: 18, gebze: 15, dudullu: 22 },
+  tuzla: { maslak: 55, levent: 52, mecidiyekoy: 55, sisli: 57, taksim: 60, kadikoy: 35, atasehir: 30, umraniye: 28, gebze: 10, dudullu: 30 },
+  kartal: { maslak: 35, levent: 32, mecidiyekoy: 35, sisli: 37, taksim: 40, kadikoy: 15, atasehir: 12, umraniye: 15, gebze: 25, dudullu: 18 }
+};
+
+// Fiyat hesaplama fonksiyonu
+function calculatePrice(from, to, personCount, serviceType) {
+  const dist = distances[from]?.[to] || 30; // Varsayılan 30 km
+  
+  // Temel birim fiyatlar (TL/km)
+  let baseRate = 8; // Günlük
+  let multiplier = 1;
+  
+  if (serviceType === "monthly") {
+    multiplier = 22; // Aylık gün sayısı
+    baseRate = 6; // Aylık indirimli
+  } else if (serviceType === "school") {
+    multiplier = 20; // Okul günleri
+    baseRate = 5.5; // Okul indirimi
+  }
+  
+  // Kişi sayısına göre araç tipi
+  let vehicleCost = 0;
+  if (personCount <= 8) {
+    vehicleCost = 150; // Minivan
+  } else if (personCount <= 16) {
+    vehicleCost = 250; // Minibüs
+  } else if (personCount <= 30) {
+    vehicleCost = 400; // Midibüs
+  } else {
+    vehicleCost = 600; // Otobüs
+  }
+  
+  const basePrice = (dist * baseRate + vehicleCost) * multiplier;
+  
+  // Yuvarlama (50'ye yuvarla)
+  return Math.round(basePrice / 50) * 50;
+}
+
+if (calcBtn) {
+  calcBtn.addEventListener("click", () => {
+    const from = document.getElementById("from-location").value;
+    const to = document.getElementById("to-location").value;
+    const personCount = parseInt(document.getElementById("person-count").value) || 10;
+    const serviceType = document.getElementById("service-type").value;
+    
+    if (!from || !to) {
+      resultPrice.textContent = "Lütfen bölge seçin";
+      return;
+    }
+    
+    const price = calculatePrice(from, to, personCount, serviceType);
+    
+    // Animasyonlu sayı gösterimi
+    let current = 0;
+    const step = Math.ceil(price / 20);
+    const interval = setInterval(() => {
+      current += step;
+      if (current >= price) {
+        current = price;
+        clearInterval(interval);
+      }
+      resultPrice.textContent = current.toLocaleString("tr-TR") + " ₺";
+    }, 30);
+  });
+}
