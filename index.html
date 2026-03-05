@@ -445,18 +445,18 @@
           </div>
         </div>
       </div>
-      <form class="contact-form reveal">
+      <form class="contact-form reveal" id="contact-form">
         <label>
           Ad Soyad
-          <input type="text" placeholder="Adınızı girin" />
+          <input type="text" name="name" placeholder="Adınızı girin" required />
         </label>
         <label>
           Telefon
-          <input type="tel" placeholder="05xx xxx xx xx" />
+          <input type="tel" name="phone" placeholder="05xx xxx xx xx" required />
         </label>
         <label>
           Servis İhtiyacı
-          <textarea rows="4" placeholder="Kişi sayısı, rota, saat bilgisi"></textarea>
+          <textarea name="message" rows="4" placeholder="Kişi sayısı, rota, saat bilgisi" required></textarea>
         </label>
         <button type="submit" class="btn primary">Gönder</button>
       </form>

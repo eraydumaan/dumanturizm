@@ -35,10 +35,47 @@ document.addEventListener("click", (e) => {
 
 const form = document.querySelector(".contact-form");
 if (form) {
-  form.addEventListener("submit", (event) => {
+  form.addEventListener("submit", async (event) => {
     event.preventDefault();
-    alert("Teşekkürler! En kısa sürede sizinle iletişime geçeceğiz.");
-    form.reset();
+    
+    const submitBtn = form.querySelector('button[type="submit"]');
+    const originalText = submitBtn.textContent;
+    
+    // Loading state
+    submitBtn.disabled = true;
+    submitBtn.textContent = "Gönderiliyor...";
+    
+    // Form verilerini al
+    const formData = {
+      name: form.querySelector('input[name="name"]').value,
+      phone: form.querySelector('input[name="phone"]').value,
+      message: form.querySelector('textarea[name="message"]').value
+    };
+    
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData)
+      });
+      
+      const data = await response.json();
+      
+      if (response.ok) {
+        alert("Teşekkürler! Mesajınız başarıyla gönderildi. En kısa sürede sizinle iletişime geçeceğiz.");
+        form.reset();
+      } else {
+        alert(data.error || "Bir hata oluştu. Lütfen tekrar deneyin.");
+      }
+    } catch (error) {
+      console.error("Form gönderme hatası:", error);
+      alert("Bağlantı hatası. Lütfen internet bağlantınızı kontrol edin.");
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = originalText;
+    }
   });
 }
 
