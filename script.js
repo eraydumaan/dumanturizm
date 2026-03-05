@@ -152,3 +152,173 @@ if (calcBtn) {
     }, 30);
   });
 }
+
+// Dark Mode Toggle
+const themeToggle = document.getElementById("theme-toggle");
+const prefersDark = window.matchMedia("(prefers-color-scheme: dark)");
+
+// Kayıtlı temayı kontrol et
+function getStoredTheme() {
+  return localStorage.getItem("theme");
+}
+
+// Temayı uygula
+function applyTheme(theme) {
+  if (theme === "dark") {
+    document.documentElement.setAttribute("data-theme", "dark");
+  } else {
+    document.documentElement.removeAttribute("data-theme");
+  }
+}
+
+// Başlangıç teması
+const storedTheme = getStoredTheme();
+if (storedTheme) {
+  applyTheme(storedTheme);
+} else if (prefersDark.matches) {
+  applyTheme("dark");
+}
+
+// Toggle butonu
+if (themeToggle) {
+  themeToggle.addEventListener("click", () => {
+    const currentTheme = document.documentElement.getAttribute("data-theme");
+    const newTheme = currentTheme === "dark" ? "light" : "dark";
+    applyTheme(newTheme);
+    localStorage.setItem("theme", newTheme);
+  });
+}
+
+// Sistem tercihi değişirse
+prefersDark.addEventListener("change", (e) => {
+  if (!getStoredTheme()) {
+    applyTheme(e.matches ? "dark" : "light");
+  }
+});
+
+// FAQ Accordion
+const faqItems = document.querySelectorAll(".faq-item");
+
+faqItems.forEach((item) => {
+  const question = item.querySelector(".faq-question");
+  
+  question.addEventListener("click", () => {
+    const isActive = item.classList.contains("active");
+    
+    // Diğer tüm açık olanları kapat
+    faqItems.forEach((otherItem) => {
+      otherItem.classList.remove("active");
+    });
+    
+    // Tıklanan öğeyi aç/kapat
+    if (!isActive) {
+      item.classList.add("active");
+    }
+  });
+});
+
+// Google Maps - Canlı Araç Takibi
+let map;
+let markers = [];
+
+// Araç konumları (demo veriler)
+const vehicleLocations = [
+  { id: 1, name: "Servis 01 - Maslak Hattı", lat: 41.1082, lng: 29.0276, status: "Yolda" },
+  { id: 2, name: "Servis 02 - Bahçeşehir", lat: 41.0550, lng: 28.6787, status: "Yolda" },
+  { id: 3, name: "Servis 03 - Kadıköy", lat: 40.9923, lng: 29.0247, status: "Yolda" },
+  { id: 4, name: "Servis 04 - Ümraniye", lat: 41.0422, lng: 29.0910, status: "Durakta" }
+];
+
+function initMap() {
+  const mapElement = document.getElementById("live-map");
+  if (!mapElement) return;
+
+  // İstanbul merkezi
+  const istanbul = { lat: 41.0082, lng: 28.9784 };
+  
+  map = new google.maps.Map(mapElement, {
+    zoom: 11,
+    center: istanbul,
+    styles: getMapStyles(),
+    disableDefaultUI: true,
+    zoomControl: true,
+    mapTypeControl: false,
+    streetViewControl: false,
+    fullscreenControl: true
+  });
+
+  // Araç markerlarını ekle
+  vehicleLocations.forEach((vehicle) => {
+    const marker = new google.maps.Marker({
+      position: { lat: vehicle.lat, lng: vehicle.lng },
+      map: map,
+      title: vehicle.name,
+      icon: {
+        url: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 40 40'%3E%3Ccircle cx='20' cy='20' r='18' fill='%23c3753b' stroke='white' stroke-width='3'/%3E%3Ctext x='20' y='26' text-anchor='middle' fill='white' font-size='18'%3E🚐%3C/text%3E%3C/svg%3E",
+        scaledSize: new google.maps.Size(40, 40)
+      },
+      animation: google.maps.Animation.DROP
+    });
+
+    const infoWindow = new google.maps.InfoWindow({
+      content: `<div style="padding:8px;font-family:Manrope,sans-serif;">
+        <strong>${vehicle.name}</strong><br>
+        <span style="color:#6b6258;">${vehicle.status}</span>
+      </div>`
+    });
+
+    marker.addListener("click", () => {
+      infoWindow.open(map, marker);
+    });
+
+    markers.push({ marker, vehicle });
+  });
+
+  // Araç listesi tıklama
+  const vehicleItems = document.querySelectorAll(".vehicle-item");
+  vehicleItems.forEach((item, index) => {
+    item.addEventListener("click", () => {
+      vehicleItems.forEach((v) => v.classList.remove("active"));
+      item.classList.add("active");
+      
+      if (markers[index]) {
+        const { marker } = markers[index];
+        map.panTo(marker.getPosition());
+        map.setZoom(14);
+        google.maps.event.trigger(marker, "click");
+      }
+    });
+  });
+}
+
+// Harita stilleri (tema uyumlu)
+function getMapStyles() {
+  const isDark = document.documentElement.getAttribute("data-theme") === "dark";
+  
+  if (isDark) {
+    return [
+      { elementType: "geometry", stylers: [{ color: "#242f3e" }] },
+      { elementType: "labels.text.stroke", stylers: [{ color: "#242f3e" }] },
+      { elementType: "labels.text.fill", stylers: [{ color: "#746855" }] },
+      { featureType: "road", elementType: "geometry", stylers: [{ color: "#38414e" }] },
+      { featureType: "road", elementType: "geometry.stroke", stylers: [{ color: "#212a37" }] },
+      { featureType: "water", elementType: "geometry", stylers: [{ color: "#17263c" }] }
+    ];
+  }
+  
+  return [
+    { featureType: "poi", elementType: "labels", stylers: [{ visibility: "off" }] },
+    { featureType: "transit", stylers: [{ visibility: "simplified" }] }
+  ];
+}
+
+// Tema değiştiğinde haritayı güncelle
+const observer = new MutationObserver(() => {
+  if (map) {
+    map.setOptions({ styles: getMapStyles() });
+  }
+});
+observer.observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+
+// Google Maps yüklendiğinde çalıştır
+window.initMap = initMap;

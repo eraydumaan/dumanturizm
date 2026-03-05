@@ -29,10 +29,19 @@
     <nav class="nav">
       <a href="#hizmetler">Hizmetler</a>
       <a href="#filo">Filo</a>
-      <a href="#fiyat">Fiyat</a>
-      <a href="#istanbul">İstanbul</a>
+      <a href="#canli-takip">Canlı Takip</a>
+      <a href="#sss">SSS</a>
       <a href="#iletisim" class="btn">İletişim</a>
     </nav>
+    <button class="theme-toggle" id="theme-toggle" aria-label="Tema Değiştir">
+      <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="12" r="5"/>
+        <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+      </svg>
+      <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+      </svg>
+    </button>
   </header>
 
   <main>
@@ -310,6 +319,134 @@
       </div>
     </section>
 
+    <!-- Canlı Araç Takip Bölümü -->
+    <section id="canli-takip" class="section live-tracking">
+      <div class="section-head reveal">
+        <h2>Canlı Araç Takibi</h2>
+        <p>Servis araçlarımızın anlık konumlarını harita üzerinde görüntüleyin.</p>
+      </div>
+      <div class="tracking-container reveal">
+        <div class="tracking-sidebar">
+          <div class="tracking-info">
+            <h3>Aktif Servisler</h3>
+            <p>Aşağıdaki servis araçlarımız şu an yolda:</p>
+          </div>
+          <div class="vehicle-list">
+            <div class="vehicle-item active" data-lat="41.0855" data-lng="29.0045">
+              <div class="vehicle-icon">🚐</div>
+              <div class="vehicle-info">
+                <div class="vehicle-name">Servis 01 - Maslak Hattı</div>
+                <div class="vehicle-status">Yolda • Levent</div>
+              </div>
+            </div>
+            <div class="vehicle-item" data-lat="41.0082" data-lng="28.9784">
+              <div class="vehicle-icon">🚐</div>
+              <div class="vehicle-info">
+                <div class="vehicle-name">Servis 02 - Bahçeşehir</div>
+                <div class="vehicle-status">Yolda • Esenyurt</div>
+              </div>
+            </div>
+            <div class="vehicle-item" data-lat="40.9923" data-lng="29.0247">
+              <div class="vehicle-icon">🚐</div>
+              <div class="vehicle-info">
+                <div class="vehicle-name">Servis 03 - Kadıköy</div>
+                <div class="vehicle-status">Yolda • Ataşehir</div>
+              </div>
+            </div>
+            <div class="vehicle-item" data-lat="41.0422" data-lng="29.0083">
+              <div class="vehicle-icon">🚐</div>
+              <div class="vehicle-info">
+                <div class="vehicle-name">Servis 04 - Ümraniye</div>
+                <div class="vehicle-status">Durakta • Ümraniye</div>
+              </div>
+            </div>
+          </div>
+          <div class="tracking-note">
+            <span>🟢</span> Canlı konum takibi aktif
+          </div>
+        </div>
+        <div class="map-container">
+          <div id="live-map"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SSS Bölümü -->
+    <section id="sss" class="section faq-section">
+      <div class="section-head reveal">
+        <h2>Sıkça Sorulan Sorular</h2>
+        <p>Merak ettiklerinizin cevaplarını burada bulabilirsiniz.</p>
+      </div>
+      <div class="faq-container reveal">
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>Servis ücretleri nasıl belirleniyor?</span>
+            <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M6 9l6 6 6-6"/>
+            </svg>
+          </button>
+          <div class="faq-answer">
+            <p>Servis ücretleri güzergah mesafesi, kişi sayısı, araç tipi ve servis sıklığına göre belirlenir. Fiyat hesaplama aracımızı kullanarak tahmini fiyat alabilir veya bizimle iletişime geçerek detaylı teklif isteyebilirsiniz.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>Okul servisi için güvenlik önlemleri nelerdir?</span>
+            <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M6 9l6 6 6-6"/>
+            </svg>
+          </button>
+          <div class="faq-answer">
+            <p>Tüm okul servislerimizde deneyimli hostes bulunur, araçlarımız düzenli bakımdan geçer, GPS takip sistemi aktiftir ve velilere anlık bilgilendirme yapılır. Ayrıca tüm sürücülerimiz sabka kaydı sorgulanmış ve eğitimli personeldir.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>Servis saatleri değiştirilebilir mi?</span>
+            <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M6 9l6 6 6-6"/>
+            </svg>
+          </button>
+          <div class="faq-answer">
+            <p>Evet, vardiya değişiklikleri ve özel durumlar için servis saatlerinizi esnek şekilde ayarlayabilirsiniz. En az 24 saat önceden bildirilmesi yeterlidir. Acil durumlarda da operasyon ekibimiz 7/24 ulaşılabilir durumdadır.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>Yedek araç hizmeti var mı?</span>
+            <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M6 9l6 6 6-6"/>
+            </svg>
+          </button>
+          <div class="faq-answer">
+            <p>Evet, filomuzda yedek araçlar bulunmaktadır. Arıza veya bakım durumlarında anlık olarak yedek araç tahsis ediyoruz. Servis aksaması yaşanmaması bizim önceliğimizdir.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>Hangi bölgelere servis veriyorsunuz?</span>
+            <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M6 9l6 6 6-6"/>
+            </svg>
+          </button>
+          <div class="faq-answer">
+            <p>İstanbul'un Avrupa ve Anadolu yakasında tüm bölgelere servis vermekteyiz. Bahçeşehir, Esenyurt, Beylikdüzü, Maslak, Levent, Kadıköy, Ataşehir, Ümraniye, Pendik, Tuzla ve daha birçok noktada aktif güzergahlarımız vardır.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>Sözleşme süresi ne kadar?</span>
+            <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M6 9l6 6 6-6"/>
+            </svg>
+          </button>
+          <div class="faq-answer">
+            <p>Minimum sözleşme süremiz 1 aydır. Uzun dönemli sözleşmelerde özel indirimler uygulanmaktadır. Yıllık sözleşmelerde %15'e varan avantajlı fiyatlar sunuyoruz.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <section class="section testimonials">
       <div class="section-head reveal">
         <h2>İş ortaklarımız ne diyor?</h2>
@@ -383,9 +520,8 @@
     <div>© 2026 Duman Turizm. Tüm hakları saklıdır.</div>
     <div class="footer-links">
       <a href="#hizmetler">Hizmetler</a>
-      <a href="#fiyat">Fiyat</a>
-      <a href="#filo">Filo</a>
-      <a href="#istanbul">İstanbul</a>
+      <a href="#canli-takip">Canlı Takip</a>
+      <a href="#sss">SSS</a>
       <a href="#iletisim">İletişim</a>
     </div>
   </footer>
@@ -397,6 +533,8 @@
     </svg>
   </a>
 
+  <!-- Google Maps API -->
+  <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap" async defer></script>
   <script src="script.js"></script>
 </body>
 </html>

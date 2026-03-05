@@ -7,6 +7,98 @@
   --accent-strong: #9a4d2a;
   --line: #e1d7c8;
   --shadow: rgba(63, 44, 29, 0.18);
+  --card-bg: #fff;
+  --topbar-bg: rgba(253, 247, 239, 0.92);
+}
+
+/* Dark Mode */
+[data-theme="dark"] {
+  --bg: #1a1612;
+  --surface: #252019;
+  --ink: #f5f0e8;
+  --muted: #a09586;
+  --accent: #e8944d;
+  --accent-strong: #f5a55a;
+  --line: #3d3429;
+  --shadow: rgba(0, 0, 0, 0.4);
+  --card-bg: #2a241c;
+  --topbar-bg: rgba(26, 22, 18, 0.95);
+}
+
+[data-theme="dark"] body {
+  background: radial-gradient(circle at 20% 20%, #1f1a14 0%, #1a1612 35%, #151210 100%);
+}
+
+[data-theme="dark"] .bg-orbit {
+  background: radial-gradient(circle, rgba(232, 148, 77, 0.15), transparent 60%);
+}
+
+[data-theme="dark"] .bg-grid {
+  background-image: linear-gradient(rgba(232, 148, 77, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(232, 148, 77, 0.04) 1px, transparent 1px);
+}
+
+[data-theme="dark"] .topbar {
+  background: var(--topbar-bg);
+  border-bottom-color: var(--line);
+}
+
+[data-theme="dark"] .card,
+[data-theme="dark"] .hero-card,
+[data-theme="dark"] .service-highlight,
+[data-theme="dark"] .tab-panels,
+[data-theme="dark"] .photo-card,
+[data-theme="dark"] .istanbul-card,
+[data-theme="dark"] .testimonial-card,
+[data-theme="dark"] .contact-form,
+[data-theme="dark"] .calc-form,
+[data-theme="dark"] .faq-item {
+  background: var(--card-bg);
+}
+
+[data-theme="dark"] .route {
+  background: var(--surface);
+}
+
+[data-theme="dark"] .tabs,
+[data-theme="dark"] .testimonials,
+[data-theme="dark"] .price-calc,
+[data-theme="dark"] .faq-section {
+  background: var(--surface);
+}
+
+[data-theme="dark"] .tab-controls {
+  background: var(--card-bg);
+}
+
+[data-theme="dark"] .btn.ghost {
+  background: var(--card-bg);
+  color: var(--ink);
+}
+
+[data-theme="dark"] .panel-highlight {
+  background: var(--surface);
+}
+
+[data-theme="dark"] .footer {
+  background: var(--surface);
+}
+
+[data-theme="dark"] .hamburger span {
+  background: var(--ink);
+}
+
+[data-theme="dark"] .nav {
+  background: var(--topbar-bg);
+}
+
+[data-theme="dark"] .calc-field select,
+[data-theme="dark"] .calc-field input,
+[data-theme="dark"] .contact-form input,
+[data-theme="dark"] .contact-form textarea {
+  background: var(--surface);
+  color: var(--ink);
+  border-color: var(--line);
 }
 
 * {
@@ -871,5 +963,273 @@ main {
 
   .price-calc {
     padding: 28px;
+  }
+}
+
+/* Theme Toggle Button */
+.theme-toggle {
+  background: var(--card-bg, #fff);
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  margin-left: 12px;
+}
+
+.theme-toggle:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 12px var(--shadow);
+}
+
+.theme-toggle svg {
+  width: 22px;
+  height: 22px;
+  color: var(--accent);
+}
+
+.theme-toggle .moon-icon {
+  display: none;
+}
+
+[data-theme="dark"] .theme-toggle .sun-icon {
+  display: none;
+}
+
+[data-theme="dark"] .theme-toggle .moon-icon {
+  display: block;
+}
+
+/* Live Tracking Section */
+.live-tracking {
+  background: var(--surface);
+  border-radius: 28px;
+  padding: 50px;
+  border: 1px solid var(--line);
+}
+
+.tracking-container {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 24px;
+  margin-top: 24px;
+  min-height: 450px;
+}
+
+.tracking-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.tracking-info h3 {
+  font-family: "Fraunces", serif;
+  font-size: 18px;
+  margin: 0 0 8px;
+}
+
+.tracking-info p {
+  font-size: 14px;
+  color: var(--muted);
+  margin: 0;
+}
+
+.vehicle-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex: 1;
+}
+
+.vehicle-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px;
+  background: var(--card-bg, #fff);
+  border-radius: 14px;
+  border: 1px solid var(--line);
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.vehicle-item:hover {
+  transform: translateX(4px);
+  box-shadow: 0 4px 12px var(--shadow);
+}
+
+.vehicle-item.active {
+  border-color: var(--accent);
+  box-shadow: 0 4px 16px rgba(195, 117, 59, 0.2);
+}
+
+.vehicle-icon {
+  font-size: 24px;
+}
+
+.vehicle-info {
+  flex: 1;
+}
+
+.vehicle-name {
+  font-weight: 600;
+  font-size: 14px;
+  margin-bottom: 4px;
+}
+
+.vehicle-status {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.tracking-note {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--muted);
+  padding: 12px;
+  background: rgba(34, 197, 94, 0.1);
+  border-radius: 10px;
+}
+
+.map-container {
+  border-radius: 20px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  background: var(--card-bg, #fff);
+  position: relative;
+}
+
+#live-map {
+  width: 100%;
+  height: 100%;
+  min-height: 450px;
+}
+
+/* FAQ Section */
+.faq-section {
+  background: var(--surface);
+  border-radius: 28px;
+  padding: 50px;
+  border: 1px solid var(--line);
+}
+
+.faq-container {
+  max-width: 800px;
+  margin: 24px auto 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.faq-item {
+  background: var(--card-bg, #fff);
+  border-radius: 16px;
+  border: 1px solid var(--line);
+  overflow: hidden;
+  transition: box-shadow 0.3s ease;
+}
+
+.faq-item:hover {
+  box-shadow: 0 8px 20px var(--shadow);
+}
+
+.faq-question {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 24px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: "Manrope", sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--ink);
+  text-align: left;
+  gap: 16px;
+}
+
+.faq-question span {
+  flex: 1;
+}
+
+.faq-icon {
+  width: 24px;
+  height: 24px;
+  color: var(--accent);
+  transition: transform 0.3s ease;
+  flex-shrink: 0;
+}
+
+.faq-item.active .faq-icon {
+  transform: rotate(180deg);
+}
+
+.faq-answer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease, padding 0.3s ease;
+}
+
+.faq-item.active .faq-answer {
+  max-height: 300px;
+}
+
+.faq-answer p {
+  padding: 0 24px 20px;
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.7;
+  font-size: 15px;
+}
+
+/* Mobile Styles for New Features */
+@media (max-width: 768px) {
+  .theme-toggle {
+    position: absolute;
+    right: 70px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 40px;
+  }
+
+  .theme-toggle:hover {
+    transform: translateY(-50%) scale(1.1);
+  }
+
+  .live-tracking,
+  .faq-section {
+    padding: 28px;
+  }
+
+  .tracking-container {
+    grid-template-columns: 1fr;
+    min-height: auto;
+  }
+
+  .map-container {
+    order: -1;
+  }
+
+  #live-map {
+    min-height: 300px;
+  }
+
+  .faq-question {
+    padding: 16px 20px;
+    font-size: 15px;
+  }
+
+  .faq-answer p {
+    padding: 0 20px 16px;
+    font-size: 14px;
   }
 }
