@@ -11,6 +11,7 @@ links.forEach((link) => {
     // Mobilde menüyü kapat
     document.querySelector(".nav").classList.remove("active");
     document.querySelector(".hamburger").classList.remove("active");
+    document.body.style.overflow = "";
   });
 });
 
@@ -18,18 +19,39 @@ links.forEach((link) => {
 const hamburger = document.querySelector(".hamburger");
 const nav = document.querySelector(".nav");
 
+function closeMenu() {
+  if (nav) nav.classList.remove("active");
+  if (hamburger) hamburger.classList.remove("active");
+  document.body.style.overflow = "";
+}
+
+function openMenu() {
+  if (nav) nav.classList.add("active");
+  if (hamburger) hamburger.classList.add("active");
+  document.body.style.overflow = "hidden";
+}
+
 if (hamburger) {
   hamburger.addEventListener("click", () => {
-    hamburger.classList.toggle("active");
-    nav.classList.toggle("active");
+    if (nav.classList.contains("active")) {
+      closeMenu();
+    } else {
+      openMenu();
+    }
   });
 }
 
 // Menü dışına tıklayınca kapat
 document.addEventListener("click", (e) => {
   if (!e.target.closest(".nav") && !e.target.closest(".hamburger")) {
-    if (nav) nav.classList.remove("active");
-    if (hamburger) hamburger.classList.remove("active");
+    closeMenu();
+  }
+});
+
+// ESC tuşu ile menüyü kapat
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") {
+    closeMenu();
   }
 });
 
