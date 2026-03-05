@@ -83,7 +83,16 @@ if (form) {
         body: JSON.stringify(formData)
       });
       
-      const data = await response.json();
+      // Response text'i al
+      const text = await response.text();
+      let data;
+      try {
+        data = JSON.parse(text);
+      } catch (e) {
+        console.error("API yanıtı JSON değil:", text);
+        alert("Sunucu hatası: " + text.substring(0, 200));
+        return;
+      }
       
       if (response.ok) {
         alert("Teşekkürler! Mesajınız başarıyla gönderildi. En kısa sürede sizinle iletişime geçeceğiz.");
@@ -93,7 +102,7 @@ if (form) {
       }
     } catch (error) {
       console.error("Form gönderme hatası:", error);
-      alert("Bağlantı hatası. Lütfen internet bağlantınızı kontrol edin.");
+      alert("Bağlantı hatası: " + error.message);
     } finally {
       submitBtn.disabled = false;
       submitBtn.textContent = originalText;
