@@ -126,7 +126,7 @@ tabButtons.forEach((button) => {
   });
 });
 
-const revealItems = document.querySelectorAll(".reveal");
+const revealItems = document.querySelectorAll(".reveal, .reveal-left, .reveal-right, .reveal-scale");
 const revealObserver = new IntersectionObserver(
   (entries) => {
     entries.forEach((entry) => {
@@ -136,7 +136,7 @@ const revealObserver = new IntersectionObserver(
       }
     });
   },
-  { threshold: 0.18 }
+  { threshold: 0.12, rootMargin: "0px 0px -50px 0px" }
 );
 
 revealItems.forEach((item) => revealObserver.observe(item));
