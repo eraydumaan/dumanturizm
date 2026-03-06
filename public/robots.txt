@@ -1,0 +1,11 @@
+# Duman Turizm - robots.txt
+# https://dumanturizm.vercel.app
+
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://dumanturizm.vercel.app/sitemap.xml
+
+# Crawl-delay (optional, for polite crawling)
+Crawl-delay: 1
